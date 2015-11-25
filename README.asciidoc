@@ -1,1 +1,38 @@
 = Asciidoctor for Atlassian BitBucket =
+
+=== Features ===
+
+. Displays an Asciidoc README (if exists) on the repository overview page.
+. Adds an Asciidoc file viewer to the source code browser.
+
+=== Usage ===
+
+The addon is still under developement and has not been included in the Atlassian Market yet, but can be used in development mode.
+
+To setup you will need:
+
+. Git
+. Node.js
+. npm
+. ngrok
+
+Then, based on the official link:https://developer.atlassian.com/bitbucket/guides/getting-started.html[instructions]:
+
+. Clone the repository and enter the directory.
+. Run ```npm install``.
+. Edit ```credentials.json``` with your BitBucket cloud credentials.
+. Run:
+[source,bash]
+----
+ngrok 3000
+----
+. In your BitBucket cloud account:
+.. Add a new Oauth consumer with the ```ngrok``` HTTPS address as the consumer callback URL.
+.. Grant repository read permissions to the new Oauth consumer.
+. Copy the Oauth consumer key to ```consumerKey``` in ```config.json```.
+. Open a new shell to the cloned directory and run:
+[source,bash]
+----
+# Substitue the base URL with the one you used as the callback URL. Pay attention to maintain the trailing slash
+AC_LOCAL_BASE_URL=https://2c57c047.ngrok.com/ node app.js
+----
