@@ -20,12 +20,24 @@
         },
         "webPanel": [
             {
-                "url": "/render-asciidoc-readme?repoPath={repo_path}",
+                "key": "render-asciidoc-readme-repo",
+                "url": "/render-asciidoc-readme-repo?repoPath={repo_path}",
                 "name": {
                     "value": "Asciidoctor README Repository Overview Panel"
                 },
-                "location": "org.bitbucket.repository.overview.informationPanel",
-                "key": "render-asciidoc-readme"
+                "location": "org.bitbucket.repository.overview.informationPanel"
+            }
+        ],
+        "fileViews": [
+            {
+                "key": "render-asciidoc-file",
+                "name": {
+                    "value": "Asciidoctor File Viwer"
+                },
+                "url": "/render-asciidoc-file?repoPath={repo_path}&rev={file_cset}&filePath={file_path}&fileName={file_name}",
+                "file_matches": {
+                    "extensions": ["asciidoc", "adoc"]
+                }
             }
         ]
     },

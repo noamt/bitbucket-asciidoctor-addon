@@ -13,7 +13,7 @@ module.exports = function (app, addon) {
         });
     });
 
-    app.get('/render-asciidoc-readme', addon.authenticate(), function (mainRequest, mainResponse) {
+    app.get('/render-asciidoc-readme-repo', addon.authenticate(), function (mainRequest, mainResponse) {
 
         var httpClient = addon.httpClient(mainRequest);
 
@@ -29,12 +29,27 @@ module.exports = function (app, addon) {
                     var fileSrc = fileSrcUrl(mainRequest.query.repoPath, rev, readmeFilePath);
                     httpClient.get(fileSrc, function (readmeErr, readmeResponse, rawReadmeData) {
                         var readmeData = JSON.parse(rawReadmeData);
-                        renderAsciiDocReadme(readmeData.data, mainResponse);
+                        renderAsciiDoc(readmeData.data, mainResponse);
                     });
                 } else {
                     mainResponse.render('no-asciidoc-readme')
                 }
             });
+        });
+    });
+
+    app.get('/render-asciidoc-file', addon.authenticate(), function (mainRequest, mainResponse) {
+        var requestQuery = mainRequest.query;
+        var repoPath = requestQuery.repoPath;
+        var rev = requestQuery.rev;
+        var filePath = requestQuery.filePath;
+
+        var httpClient = addon.httpClient(mainRequest);
+
+        var fileSrc = fileSrcUrl(repoPath, rev, filePath);
+        httpClient.get(fileSrc, function (err, response, data) {
+            var fileData = JSON.parse(data);
+            renderAsciiDoc(fileData.data, mainResponse);
         });
     });
 
@@ -69,7 +84,7 @@ module.exports = function (app, addon) {
         return '/api/1.0/repositories/' + repoPath + '/src/' + rev + '/' + filePath
     }
 
-    function renderAsciiDocReadme(content, response) {
+    function renderAsciiDoc(content, response) {
         var asciidoctor = require('asciidoctor.js')();
         var opal = asciidoctor.Opal;
 
@@ -81,7 +96,7 @@ module.exports = function (app, addon) {
         );
         var html = processor.$convert(content, options);
 
-        response.render('render-asciidoc-readme', {
+        response.render('render-asciidoc', {
             content: html
         });
     }
