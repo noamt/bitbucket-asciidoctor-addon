@@ -1,0 +1,34 @@
+{
+    "key": "bitbucket-asciidoctor-addon",
+    "name": "BitBucket Asciidoctor Add-On",
+    "description": "An Asciidoctor add-on for Atlassian Bitbucket",
+    "vendor": {
+        "name": "Noam Y. Tenne",
+        "url": "www.10ne.org"
+    },
+    "baseUrl": "{{localBaseUrl}}",
+    "authentication": {
+        "type": "jwt"
+    },
+    "lifecycle": {
+        "installed": "/installed",
+        "uninstalled": "/uninstalled"
+    },
+    "modules": {
+        "oauthConsumer": {
+            "clientId": "{{consumerKey}}"
+        },
+        "webPanel": [
+            {
+                "url": "/render-asciidoc-readme?repoPath={repo_path}",
+                "name": {
+                    "value": "Asciidoctor README Repository Overview Panel"
+                },
+                "location": "org.bitbucket.repository.overview.informationPanel",
+                "key": "render-asciidoc-readme"
+            }
+        ]
+    },
+    "scopes": ["account", "repository"],
+    "contexts": ["account"]
+}

@@ -1,0 +1,37 @@
+{
+  "development": {
+    "bitbucket": true,
+    "port": 3000,
+    "errorTemplate": true,
+    "consumerKey": null,
+
+    "store": {
+      "adapter": "jugglingdb",
+      "type": "sqlite3",
+      "database": "store.db"
+    },
+
+    "hosts": [
+      "http://admin:admin@localhost:1990/confluence",
+      "http://admin:admin@localhost:2990/jira"
+    ]
+  },
+
+  "production": {
+
+    "bitbucket": true,
+    "port": "$PORT",
+    "errorTemplate": true,
+    "consumerKey": null,
+
+    "localBaseUrl": "https://your-subdomain.herokuapp.com",
+    "store": {
+      "type": "postgres",
+      "url": "$DATABASE_URL"
+    },
+
+    "whitelist": [
+      "bitbucket.org"
+    ]
+  }
+}
